@@ -17,7 +17,7 @@ import java.util.List;
 @RestController // is a Component
 //@RequestMapping(path="/employees", produces = MediaType.APPLICATION_JSON_VALUE) // works
 @RequestMapping(path="/employees") // works
-@AllArgsConstructor
+@AllArgsConstructor // lombok
 public class EmployeeController {
     private IEmployeeService iEmployeeService; // injected due to @RestController (which maps to @Component), @AllArgsConstructor
 
