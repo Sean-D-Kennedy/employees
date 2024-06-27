@@ -62,6 +62,7 @@ public class EmployeeController {
                 .status(HttpStatus.NO_CONTENT) // success, no message body
                 .build();
     }
+    // This is where updates map to.
     @PutMapping("/{staffId}")
     public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable int staffId, @RequestBody Employee employee){
         iEmployeeService.updateEmployee(staffId, employee);
