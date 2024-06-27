@@ -20,17 +20,16 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Transactional  // jakarta, REQUIRED, this method is done completely or not at all
     void deleteByStaffId(int staffId);
-/*
-    List<Car> findAllByBrandName(String brandName); // must have a property "brandName" in Car
-    List<Car> findAllByCarType(String carType); // must have a property "carType" in Car
 
-    @Transactional  // jakarta, REQUIRED, this method is done completely or not at all
-    void deleteByRegNo(String regNo);
+//    List<Car> findAllByBrandName(String brandName); // must have a property "brandName" in Car
+//    List<Car> findAllByCarType(String carType); // must have a property "carType" in Car
+
+//    @Transactional  // jakarta, REQUIRED, this method is done completely or not at all
+//    void deleteByRegNo(String regNo);
 
     @Transactional  // jakarta, REQUIRED, this method is done completely or not at all
     @Modifying
-    @Query("update Car c set c.brandName = ?1, c.modelName = ?2, c.carType = ?3, c.year = ?4, c.kms = ?5, c.price = ?6 where c.regNo = ?7")
-    void updateCar(String brandName, String modelName, String carType,
-                   Integer year, Integer kms, Integer price, String regNo);
-*/
+    @Query("update Employee e set e.firstName = ?1, e.surname = ?2, e.dept = ?3, e.age = ?4 where e.staffId = ?5")
+    void updateEmployee(String firstName, String surname, String dept, Integer age, Integer staffId);
+
 }

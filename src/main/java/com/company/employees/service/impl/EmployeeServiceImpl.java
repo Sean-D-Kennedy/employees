@@ -2,6 +2,7 @@ package com.company.employees.service.impl;
 
 import com.company.employees.controller.exception.EmployeeAlreadyExistsException;
 import com.company.employees.controller.exception.EmployeeNotFoundException;
+import com.company.employees.controller.exception.StaffIdsMismatchException;
 import com.company.employees.repository.EmployeeRepository;
 import com.company.employees.repository.entity.Employee;
 import com.company.employees.service.IEmployeeService;
@@ -53,6 +54,19 @@ public class EmployeeServiceImpl implements IEmployeeService {
         employeeRepository.deleteAll(); // already available
         return true;
     }
+    public boolean updateEmployee(int staffIdFromURI, Employee employee){
+        if(staffIdFromURI != employee.getStaffId()) {
+            throw new StaffIdsMismatchException("Staff Ids numbers mismatch!. URI: "+staffIdFromURI+", Entity Body: "+employee.getStaffId());
+        }
+        // this is an update as the regNo is already in the database
+        // Update - save() does insert as we know; it will do update if the primary key is present.
+        // However, as I am letting the db generate ID's for the primary keys, this will not work.
+        // Thus, we need to annotate the update method with @Transaction, @Query and @Modifying.
+        // https://stackoverflow.com/questions/11881479/how-do-i-update-an-entity-using-spring-data-jpa
+        employeeRepository.updateEmployee(employee.getFirstName(), employee.getSurname(), employee.getDept(),
+                employee.getAge(), employee.getStaffId());
+        return true;
+    }
     /*
     public List<CarDTO> getAllCarsByBrandName(String brandName){
         List<CarDTO> listOfCarDtos = new ArrayList<>();
@@ -79,19 +93,6 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
     public boolean deleteAllCars(){
         employeeRepository.deleteAll(); // already available
-        return true;
-    }
-    public boolean updateCar(String carRegNoFromURI, Car car){
-        if(!carRegNoFromURI.equals(car.getRegNo())) { // reg numbers do not match, generate an exception
-            throw new CarRegNumbersMismatchException("Car reg numbers mismatch!. URI: "+carRegNoFromURI+", Entity Body: "+car.getRegNo());
-        }
-        // this is an update as the regNo is already in the database
-        // Update - save() does insert as we know; it will do update if the primary key is present.
-        // However, as I am letting the db generate ID's for the primary keys, this will not work.
-        // Thus, we need to annotate the update method with @Transaction, @Query and @Modifying.
-        // https://stackoverflow.com/questions/11881479/how-do-i-update-an-entity-using-spring-data-jpa
-        employeeRepository.updateCar(car.getBrandName(), car.getModelName(), car.getCarType(),
-                car.getYear(), car.getKms(), car.getPrice(), car.getRegNo());
         return true;
     }
 

@@ -62,15 +62,15 @@ public class EmployeeController {
                 .status(HttpStatus.NO_CONTENT) // success, no message body
                 .build();
     }
-
-    /*
-    @DeleteMapping
-    public ResponseEntity<String> deleteAllCars(){
-        iCarService.deleteAllCars();
+    @PutMapping("/{staffId}")
+    public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable int staffId, @RequestBody Employee employee){
+        iEmployeeService.updateEmployee(staffId, employee);
         return ResponseEntity
-                .status(HttpStatus.NO_CONTENT) // success, no message body
+                .status(HttpStatus.NO_CONTENT) // no message body
                 .build();
     }
+
+    /*
     @PutMapping
     public ResponseEntity<String> putNotSupported(){
         return ResponseEntity
@@ -89,27 +89,7 @@ public class EmployeeController {
         return iCarService.getAllCarsByCarType(carType);
     }
 
-    @DeleteMapping("/{carRegNo}")
-    public ResponseEntity<String> deleteCarDetails(@PathVariable String carRegNo){
-        iCarService.deleteCar(carRegNo);
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT) // success, no message body
-                .build();
-    }
-    @PostMapping("/{carRegNo}")
-    public ResponseEntity<String> postNotSupported(){
-        return ResponseEntity
-                .status(HttpStatus.METHOD_NOT_ALLOWED)
-                .build();
-    }
 
-    @PutMapping("/{carRegNo}")
-    public ResponseEntity<CarDTO> updateCar(@PathVariable String carRegNo, @RequestBody Car car){
-        iCarService.updateCar(carRegNo, car);
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT) // no message body
-                .build();
-    }
 //    @OptionsMapping  - not available
 //    @HeadMapping     - not available
     @RequestMapping(method = RequestMethod.OPTIONS)

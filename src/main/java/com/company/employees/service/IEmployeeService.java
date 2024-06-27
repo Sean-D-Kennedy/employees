@@ -21,5 +21,5 @@ public interface IEmployeeService {
     boolean deleteAllEmployees();
 
     // PUT
-//    public boolean updateEmployee(String staffId, Employee employee);
+    public boolean updateEmployee(int staffId, Employee employee);
 }
