@@ -49,6 +49,10 @@ public class EmployeeServiceImpl implements IEmployeeService {
         employeeRepository.deleteByStaffId(staffId); // derived query
         return true;
     }
+    public boolean deleteAllEmployees(){
+        employeeRepository.deleteAll(); // already available
+        return true;
+    }
     /*
     public List<CarDTO> getAllCarsByBrandName(String brandName){
         List<CarDTO> listOfCarDtos = new ArrayList<>();

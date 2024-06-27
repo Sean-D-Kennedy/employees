@@ -55,6 +55,13 @@ public class EmployeeController {
                 .status(HttpStatus.NO_CONTENT) // success, no message body
                 .build();
     }
+    @DeleteMapping
+    public ResponseEntity<String> deleteAllEmployees(){
+        iEmployeeService.deleteAllEmployees();
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT) // success, no message body
+                .build();
+    }
 
     /*
     @DeleteMapping
