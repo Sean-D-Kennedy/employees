@@ -17,6 +17,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     Optional<Employee> findByStaffId(int staffId);
     // no method save(Car) defined, framework provides by default
+
+    @Transactional  // jakarta, REQUIRED, this method is done completely or not at all
+    void deleteByStaffId(int staffId);
 /*
     List<Car> findAllByBrandName(String brandName); // must have a property "brandName" in Car
     List<Car> findAllByCarType(String carType); // must have a property "carType" in Car

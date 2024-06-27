@@ -17,7 +17,7 @@ public interface IEmployeeService {
 //    public List<EmployeeDTO> getAllCarsByCarType(String carType);
 
     // DELETE
-//    boolean deleteEmployee(String staffId);
+    boolean deleteEmployee(int staffId);
 //    boolean deleteAllEmployee();
 
     // PUT

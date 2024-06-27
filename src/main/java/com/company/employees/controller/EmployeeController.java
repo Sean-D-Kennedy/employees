@@ -48,6 +48,13 @@ public class EmployeeController {
                 .status(HttpStatus.OK)
                 .body(employeeDto);
     }
+    @DeleteMapping("/{staffId}")
+    public ResponseEntity<String> deleteEmployeeDetails(@PathVariable int staffId){
+        iEmployeeService.deleteEmployee(staffId);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT) // success, no message body
+                .build();
+    }
 
     /*
     @DeleteMapping

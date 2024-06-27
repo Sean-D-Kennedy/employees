@@ -42,6 +42,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
         EmployeeDTO employeeDto = EmployeeMapper.mapToEmployeeDto(employee, new EmployeeDTO()); // so the primary key is not returned
         return employeeDto;
     }
+    public boolean deleteEmployee(int staffId){
+        Employee employee = employeeRepository
+                .findByStaffId(staffId) // returns Optional<Employee>
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found in db! : "+staffId));
+        employeeRepository.deleteByStaffId(staffId); // derived query
+        return true;
+    }
     /*
     public List<CarDTO> getAllCarsByBrandName(String brandName){
         List<CarDTO> listOfCarDtos = new ArrayList<>();
