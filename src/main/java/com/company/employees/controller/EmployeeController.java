@@ -3,6 +3,7 @@ package com.company.employees.controller;
 import com.company.employees.repository.entity.Employee;
 import com.company.employees.service.IEmployeeService;
 import com.company.employees.service.dto.EmployeeDTO;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class EmployeeController {
 
 
     @PostMapping
-    public ResponseEntity<EmployeeDTO> addEmployee(@RequestBody Employee employee, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<EmployeeDTO> addEmployee(@RequestBody @Valid Employee employee, UriComponentsBuilder uriComponentsBuilder) {
         System.out.println("XXX employee is "+employee);
         EmployeeDTO employeeDto = iEmployeeService.addEmployee(employee);
 
