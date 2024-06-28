@@ -6,13 +6,15 @@ import com.company.employees.service.dto.EmployeeDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController // is a Component
 //@RequestMapping(path="/employees", produces = MediaType.APPLICATION_JSON_VALUE) // works
@@ -23,11 +25,11 @@ public class EmployeeController {
 
     //       /cars
     @GetMapping
-    public List<EmployeeDTO> getAllCars(){return iEmployeeService.getAllEmployees();}
+    public List<EmployeeDTO> getAllEmployees(){return iEmployeeService.getAllEmployees();}
 
 
     @PostMapping
-    public ResponseEntity<EmployeeDTO> addCar(@RequestBody Employee employee, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<EmployeeDTO> addEmployee(@RequestBody Employee employee, UriComponentsBuilder uriComponentsBuilder) {
         System.out.println("XXX employee is "+employee);
         EmployeeDTO employeeDto = iEmployeeService.addEmployee(employee);
 
@@ -44,6 +46,27 @@ public class EmployeeController {
     @GetMapping("/{staffId}")
     public ResponseEntity<EmployeeDTO> getEmployeeDetails(@PathVariable int staffId){
         EmployeeDTO employeeDto = iEmployeeService.getEmployee(staffId);
+        // HATEOAS
+        employeeDto.add(
+                linkTo(
+                        methodOn(EmployeeController.class)
+                                .getEmployeeDetails(staffId)
+                ).withSelfRel(),
+                linkTo(
+                        methodOn(EmployeeController.class)
+                                .addEmployee(null, null)
+                ).withRel("addEmployee"),
+                linkTo(
+                        methodOn(EmployeeController.class)
+                                .updateEmployee(staffId, null)
+                ).withRel("updateEmployee"),
+                linkTo(
+                        methodOn(EmployeeController.class)
+                                .deleteEmployeeDetails(staffId)
+                ).withRel("deleteEmployee")
+
+        );
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(employeeDto);
