@@ -26,7 +26,36 @@ public class EmployeeController {
 
     //       /cars
     @GetMapping
-    public List<EmployeeDTO> getAllEmployees(){return iEmployeeService.getAllEmployees();}
+//    public List<EmployeeDTO> getAllEmployees(){return iEmployeeService.getAllEmployees();}
+    public List<EmployeeDTO> getAllEmployees(){
+        List<EmployeeDTO> employeeDTOList = iEmployeeService.getAllEmployees();
+        for(EmployeeDTO employeeDto : employeeDTOList){
+            employeeDto.add(
+                    linkTo(
+                            methodOn(EmployeeController.class)
+                                    .getAllEmployees()
+                    ).withSelfRel(),
+                    linkTo(
+                            methodOn(EmployeeController.class)
+                                    .addEmployee(null, null)
+                    ).withRel("addEmployee"),
+                    linkTo(
+                            methodOn(EmployeeController.class)
+                                    .getEmployeeDetails(employeeDto.getStaffId())
+                    ).withRel("getEmployee"),
+                    linkTo(
+                            methodOn(EmployeeController.class)
+                                    .updateEmployee(employeeDto.getStaffId(), null)
+                    ).withRel("updateEmployee"),
+                    linkTo(
+                            methodOn(EmployeeController.class)
+                                    .deleteEmployeeDetails(employeeDto.getStaffId())
+                    ).withRel("deleteEmployee")
+
+            );
+        }
+        return employeeDTOList;
+    }
 
 
     @PostMapping
@@ -48,6 +77,11 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDTO> getEmployeeDetails(@PathVariable int staffId){
         EmployeeDTO employeeDto = iEmployeeService.getEmployee(staffId);
         // HATEOAS
+        // add() is a method in RepresentationModel
+        // linkTo() and methodOn() are both static methods in WebMvcLinkBuilder
+        //   - linkTo inspects thr EmployeeController class and gets the root mapping
+        //   - methodOn obtains the method mapping by making dummy invocations on the target method
+        //       - as they are dummy invocations, I can pass in 'null' where convenient
         employeeDto.add(
                 linkTo(
                         methodOn(EmployeeController.class)
