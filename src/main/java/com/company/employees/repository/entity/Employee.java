@@ -30,8 +30,9 @@ public class Employee {
 //    @NotBlank(message = "age required") // No validator could be found for constraint 'jakarta.validation.constraints.NotBlank' validating type 'java.lang.Integer'. Check configuration for 'age'
     @Range(min = 18, message= "age must >=18, and must not be empty or null")    private int age;
 
-    @NotNull(message = "staffId required")
+//    @NotNull(message = "staffId required")
     @Column(name="staff_id") // jakarta
+    @Range(min = 1, message= "staffId must >= 1")
     private int staffId;
 }
 

@@ -30,6 +30,12 @@ public class EmployeeController {
     public List<EmployeeDTO> getAllEmployees(){
         List<EmployeeDTO> employeeDTOList = iEmployeeService.getAllEmployees();
         for(EmployeeDTO employeeDto : employeeDTOList){
+            // HATEOAS
+            // add() is a method in RepresentationModel
+            // linkTo() and methodOn() are both static methods in WebMvcLinkBuilder
+            //   - linkTo inspects thr EmployeeController class and gets the root mapping
+            //   - methodOn obtains the method mapping by making dummy invocations on the target method
+            //       - as they are dummy invocations, I can pass in 'null' where convenient
             employeeDto.add(
                     linkTo(
                             methodOn(EmployeeController.class)
